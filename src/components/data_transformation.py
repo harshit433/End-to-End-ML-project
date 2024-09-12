@@ -11,6 +11,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from src.utils import saving_object
 
+
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path: str = os.path.join('artifacts','preprocessor.pkl')
@@ -46,11 +47,13 @@ class DataTransformation:
 
             return preprocessor
 
-        except:
-            pass
+        except Exception as e:
+            raise CustomException(e,sys)    
+            
     
 
     def initiate_data_transformation(self,train_path,test_path):
+
         try:
             logging.info("Entered the data transformation method")
             train_df = pd.read_csv(train_path)
