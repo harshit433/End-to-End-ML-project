@@ -9,6 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
+from src.utils import saving_object
 
 @dataclass
 class DataTransformationConfig:
