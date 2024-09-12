@@ -18,7 +18,7 @@ class DataIngestion:
         self.ingestion_config = DataIngestionConfig()
     
     def initiate_data_ingestion(self):
-        logging.INFO("Entered the data ingestion method")
+        logging.info("Entered the data ingestion method")
         try:
             df = pd.read_csv('notebook\data\stud.csv')
             logging.info('Read the dataframe successfully')
@@ -29,7 +29,7 @@ class DataIngestion:
             logging.info("Train test split started")
 
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
-            
+
             train_set.to_csv(self.ingestion_config.train_data_path,index=False, header=True)
             test_set.to_csv(self.ingestion_config.test_data_path,index=False, header=True)
 
@@ -43,3 +43,6 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e,sys)
         
+if __name__ == "__main__":
+    data_ingestion = DataIngestion()
+    data_ingestion.initiate_data_ingestion()
