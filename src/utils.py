@@ -6,6 +6,8 @@ import os
 from src.exception import CustomException
 from sklearn.metrics import r2_score
 
+
+## SAVE A FILE 
 def save_object(file_path, obj):
     try:
         dir_path = os.path.dirname(file_path)
@@ -15,6 +17,17 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e,sys)
 
+
+## LOAD A FILE
+def load_object(file_path):
+    try:
+        with open(file_path, 'rb') as file:
+            return dill.load(file)
+    except Exception as e:
+        raise CustomException(e,sys)
+
+
+## EVALUATE MULTIPLE MODELS TO GET THE BEST MODEL
 def evaluate_model(X_train,y_train,X_test,y_test,models):
     try:
         model_report = {}
