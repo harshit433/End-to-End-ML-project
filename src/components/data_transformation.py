@@ -9,7 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from src.utils import saving_object
+from src.utils import save_object
 
 
 @dataclass
@@ -79,7 +79,7 @@ class DataTransformation:
 
             logging.info(f"Saved preprocessing object.")
 
-            saving_object(
+            save_object(
                 file_path = self.preprocessor_config.preprocessor_obj_file_path,
                 object = preprocessing_obj
             )

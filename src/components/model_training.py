@@ -15,7 +15,7 @@ from xgboost import XGBRegressor
 
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import saving_object, evaluate_model
+from src.utils import save_object, evaluate_model
 
 @dataclass
 class ModelTrainerConfig:
@@ -44,5 +44,24 @@ class ModelTrainer:
 
             model_report:dict =evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models = models)
 
+            best_model_name = max(model_report, key=model_report.get)   
+
+            best_model = models[best_model_name]
+
+            if model_report[best_model_name] < 0.6:
+                raise CustomException("Model performance is not good")    
+            
+            logging.info("Best model found on both training and testing data")
+
+            save_object(
+                file_path=self.model_trainer_config.trained_model_file_path,
+                obj= best_model
+            )
+
+            predicted = best_model.predict(X_test)
+            r2 = r2_score(y_test, predicted)
+            return r2
+        
+        
         except Exception as e:
             raise CustomException(e, sys)
