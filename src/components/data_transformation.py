@@ -14,7 +14,7 @@ from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path: str = os.path.join('artifacts','preprocessor.pkl')
+    preprocessor_obj_file_path: str = os.path.join('artifects','preprocessor.pkl')
 class DataTransformation:
     def __init__(self):
         self.preprocessor_config = DataTransformationConfig()
@@ -26,7 +26,7 @@ class DataTransformation:
             num_pipeline = Pipeline(
                 steps=[
                     ('imputer', SimpleImputer(strategy='median')),
-                    ('std_scaler', StandardScaler())
+                    ('std_scaler', StandardScaler(with_mean=False))
                 ]
             )
 
@@ -34,7 +34,7 @@ class DataTransformation:
                 steps=[
                     ('imputer', SimpleImputer(strategy='most_frequent')),
                     ('onehot', OneHotEncoder()),
-                    ('scaler',StandardScaler())
+                    ('scaler',StandardScaler(with_mean=False))
                 ]
             )
 
@@ -81,12 +81,11 @@ class DataTransformation:
 
             save_object(
                 file_path = self.preprocessor_config.preprocessor_obj_file_path,
-                object = preprocessing_obj
+                obj = preprocessing_obj
             )
             return (
                 train_arr,
                 test_arr,
-                self.preprocessor_config.preprocessor_obj_file_path,
             )
         except Exception as e:
             raise CustomException(e,sys)

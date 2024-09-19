@@ -31,7 +31,7 @@ def predictdata():
         data = data.get_data_as_dataframe()
         predict_pipeline = PredictPipeline()
         prediction = predict_pipeline.predict(data)
-        return render_template('home.html', prediction=prediction[0])
+        return render_template('home.html', results=prediction[0])
     
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=8000,debug=True)
